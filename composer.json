@@ -1,0 +1,18 @@
+{
+    "name": "wedevsofficial/wp-php-cs-fixer",
+    "description": "WordPress rules for php-cs-fixer",
+    "authors": [
+        {
+            "name": "Tareq Hasan",
+            "email": "tareq@wedevs.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "WeDevs\\Fixer\\": "src"
+        }
+    },
+    "require": {
+    }
+}
