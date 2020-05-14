@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of weDocs.
+ *
+ * (c) Tareq Hasan <tareq@wedevs.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace WeDevs\Fixer;
 
 /*
@@ -15,9 +25,9 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Preg;
 use SplFileInfo;
 
 /**
@@ -61,7 +71,7 @@ final class Sample {
     /**
      * {@inheritdoc}
      */
-    protected function applyFix(\SplFileInfo $file, Tokens $tokens)
+    protected function applyFix(SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isClassy()) {
@@ -88,13 +98,13 @@ final class Sample {
         $content = $tokens[$index]->getContent();
 
         // there should be two new lines
-        if (substr_count($content, "\n") != 2) {
+        if (2 !== substr_count($content, "\n")) {
             $ending = $this->whitespacesConfig->getLineEnding();
 
-            $emptyLines = $ending . $ending;
+            $emptyLines = $ending.$ending;
             $indent = 1 === Preg::match('/^.*\R( *)$/s', $content, $matches) ? $matches[1] : '';
 
-            $tokens[$index] = new Token([T_WHITESPACE, $emptyLines . $indent]);
+            $tokens[$index] = new Token([T_WHITESPACE, $emptyLines.$indent]);
         }
     }
 }

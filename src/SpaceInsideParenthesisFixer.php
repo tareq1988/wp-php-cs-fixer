@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of weDocs.
+ *
+ * (c) Tareq Hasan <tareq@wedevs.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace WeDevs\Fixer;
 
 /*
@@ -32,7 +42,8 @@ final class SpaceInsideParenthesisFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      */
-    public function getDefinition() {
+    public function getDefinition()
+    {
         return new FixerDefinition(
             'There MUST be a space after the opening parenthesis and a space before the closing parenthesis.',
             [
@@ -52,61 +63,64 @@ function  foo( $bar, $baz )
     return false;
 }
 '
-                        ),
+                ),
             ]
-                );
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isCandidate( Tokens $tokens ) {
-        return $tokens->isTokenKindFound( '(' );
+    public function isCandidate(Tokens $tokens)
+    {
+        return $tokens->isTokenKindFound('(');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function applyFix( SplFileInfo $file, Tokens $tokens ) {
-        foreach ( $tokens as $index => $token ) {
-            if ( !$token->equals( '(' ) ) {
+    protected function applyFix(SplFileInfo $file, Tokens $tokens)
+    {
+        foreach ($tokens as $index => $token) {
+            if (!$token->equals('(')) {
                 continue;
             }
 
             // don't process if the next token is `)`
-            $nextMeaningfulTokenIndex = $tokens->getNextMeaningfulToken( $index );
+            $nextMeaningfulTokenIndex = $tokens->getNextMeaningfulToken($index);
 
-            if ( ')' === $tokens[$nextMeaningfulTokenIndex]->getContent() ) {
+            if (')' === $tokens[$nextMeaningfulTokenIndex]->getContent()) {
                 continue;
             }
 
-            $endParenthesisIndex = $tokens->findBlockEnd( Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index );
+            $endParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 
-            $afterParenthesisIndex = $tokens->getNextNonWhitespace( $endParenthesisIndex );
+            $afterParenthesisIndex = $tokens->getNextNonWhitespace($endParenthesisIndex);
             $afterParenthesisToken = $tokens[$afterParenthesisIndex];
 
-            if ( $afterParenthesisToken->isGivenKind( CT::T_USE_LAMBDA ) ) {
-                $useStartParenthesisIndex = $tokens->getNextTokenOfKind( $afterParenthesisIndex, ['('] );
-                $useEndParenthesisIndex   = $tokens->findBlockEnd( Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $useStartParenthesisIndex );
+            if ($afterParenthesisToken->isGivenKind(CT::T_USE_LAMBDA)) {
+                $useStartParenthesisIndex = $tokens->getNextTokenOfKind($afterParenthesisIndex, ['(']);
+                $useEndParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $useStartParenthesisIndex);
 
                 // add single-line edge whitespaces inside use parentheses
-                $this->fixParenthesisInnerEdge( $tokens, $useStartParenthesisIndex, $useEndParenthesisIndex );
+                $this->fixParenthesisInnerEdge($tokens, $useStartParenthesisIndex, $useEndParenthesisIndex);
             }
 
             // add single-line edge whitespaces inside parameters list parentheses
-            $this->fixParenthesisInnerEdge( $tokens, $index, $endParenthesisIndex );
+            $this->fixParenthesisInnerEdge($tokens, $index, $endParenthesisIndex);
         }
     }
 
-    private function fixParenthesisInnerEdge( Tokens $tokens, $start, $end ) {
+    private function fixParenthesisInnerEdge(Tokens $tokens, $start, $end)
+    {
         // add single-line whitespace before )
-        if ( !$tokens[$end - 1]->isWhitespace( $this->singleLineWhitespaceOptions ) ) {
-            $tokens->ensureWhitespaceAtIndex( $end, 0, ' ' );
+        if (!$tokens[$end - 1]->isWhitespace($this->singleLineWhitespaceOptions)) {
+            $tokens->ensureWhitespaceAtIndex($end, 0, ' ');
         }
 
         // add single-line whitespace after (
-        if ( !$tokens[$start + 1]->isWhitespace( $this->singleLineWhitespaceOptions ) ) {
-            $tokens->ensureWhitespaceAtIndex( $start, 1, ' ' );
+        if (!$tokens[$start + 1]->isWhitespace($this->singleLineWhitespaceOptions)) {
+            $tokens->ensureWhitespaceAtIndex($start, 1, ' ');
         }
     }
 }
