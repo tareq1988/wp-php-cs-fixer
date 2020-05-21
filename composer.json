@@ -1,6 +1,8 @@
 {
     "name": "tareq1988/wp-php-cs-fixer",
+    "type": "library",
     "description": "WordPress rules for php-cs-fixer",
+    "license": "MIT",
     "authors": [
         {
             "name": "Tareq Hasan",
