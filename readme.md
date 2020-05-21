@@ -42,9 +42,9 @@ In your PHP CS Fixer configuration (`.php_cs` or `.php_cs.dist`) register fixers
 
  return PhpCsFixer\Config::create()
 +    ->registerCustomFixers([
-        new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
-        new WeDevs\Fixer\BlankLineAfterClassOpeningFixer()
-     ])
++        new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
++        new WeDevs\Fixer\BlankLineAfterClassOpeningFixer()
++     ])
 +    ->setRules( WeDevs\Fixer\Fixer::rules() )
      ->setFinder( $finder )
 ;
