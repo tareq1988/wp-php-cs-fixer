@@ -32,14 +32,14 @@ In your PHP CS Fixer configuration (`.php_cs` or `.php_cs.dist`) register fixers
 ```diff
  <?php
  // add the custom fixers
- + require_once __DIR__ . '/vendor/tareq1988/wp-php-cs-fixer/loader.php';
++ require_once __DIR__ . '/vendor/tareq1988/wp-php-cs-fixer/loader.php';
 
  $finder = PhpCsFixer\Finder::create()
     ->exclude('node_modules')
     ->exclude('vendors')
     ->in( __DIR__ )
 ;
- 
+
  return PhpCsFixer\Config::create()
 +    ->registerCustomFixers([
         new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
