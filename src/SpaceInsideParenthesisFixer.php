@@ -95,7 +95,7 @@ function  foo( $bar, $baz )
     private function fixParenthesisInnerEdge(Tokens $tokens, $start, $end)
     {
         // add single-line whitespace before )
-        if (!$tokens[$end - 1]->isWhitespace($this->singleLineWhitespaceOptions)) {
+        if (!$tokens[$end - 1]->isWhitespace($this->singleLineWhitespaceOptions) && false === strpos($tokens[$end - 1]->getContent(), "\n")) {
             $tokens->ensureWhitespaceAtIndex($end, 0, ' ');
         }
 
