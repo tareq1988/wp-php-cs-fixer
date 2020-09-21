@@ -100,7 +100,7 @@ function  foo( $bar, $baz )
         }
 
         // add single-line whitespace after (
-        if (!$tokens[$start + 1]->isWhitespace($this->singleLineWhitespaceOptions)) {
+        if (!$tokens[$start + 1]->isWhitespace($this->singleLineWhitespaceOptions) && false === strpos($tokens[$start + 1]->getContent(), "\n")) {
             $tokens->ensureWhitespaceAtIndex($start, 1, ' ');
         }
     }
