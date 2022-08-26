@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeDevs\Fixer;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -23,7 +26,7 @@ final class BlankLineAfterClassOpeningFixer extends AbstractFixer implements Whi
     /**
      * {@inheritdoc}
      */
-    public function getDefinition()
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There should be one empty line after class opening brace.',
@@ -44,7 +47,7 @@ final class Sample {
     /**
      * {@inheritdoc}
      */
-    public function isCandidate(Tokens $tokens)
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
@@ -52,7 +55,7 @@ final class Sample {
     /**
      * {@inheritdoc}
      */
-    protected function applyFix(SplFileInfo $file, Tokens $tokens)
+    protected function applyFix(SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isClassy()) {
@@ -74,7 +77,7 @@ final class Sample {
      *
      * @param int $index
      */
-    private function fixWhitespace(Tokens $tokens, $index)
+    private function fixWhitespace(Tokens $tokens, $index): void
     {
         $content = $tokens[$index]->getContent();
 

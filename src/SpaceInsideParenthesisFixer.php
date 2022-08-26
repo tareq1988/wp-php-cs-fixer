@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeDevs\Fixer;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
@@ -23,7 +26,7 @@ final class SpaceInsideParenthesisFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      */
-    public function getDefinition()
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There MUST be a space after the opening parenthesis and a space before the closing parenthesis.',
@@ -52,7 +55,7 @@ function  foo( $bar, $baz )
     /**
      * {@inheritdoc}
      */
-    public function isCandidate(Tokens $tokens)
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound('(');
     }
@@ -60,7 +63,7 @@ function  foo( $bar, $baz )
     /**
      * {@inheritdoc}
      */
-    protected function applyFix(SplFileInfo $file, Tokens $tokens)
+    protected function applyFix(SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->equals('(')) {
@@ -92,15 +95,15 @@ function  foo( $bar, $baz )
         }
     }
 
-    private function fixParenthesisInnerEdge(Tokens $tokens, $start, $end)
+    private function fixParenthesisInnerEdge(Tokens $tokens, $start, $end): void
     {
         // add single-line whitespace before )
-        if (!$tokens[$end - 1]->isWhitespace($this->singleLineWhitespaceOptions) && false === strpos($tokens[$end - 1]->getContent(), "\n")) {
+        if (!$tokens[$end - 1]->isWhitespace($this->singleLineWhitespaceOptions) && !str_contains($tokens[$end - 1]->getContent(), "\n")) {
             $tokens->ensureWhitespaceAtIndex($end, 0, ' ');
         }
 
         // add single-line whitespace after (
-        if (!$tokens[$start + 1]->isWhitespace($this->singleLineWhitespaceOptions) && false === strpos($tokens[$start + 1]->getContent(), "\n")) {
+        if (!$tokens[$start + 1]->isWhitespace($this->singleLineWhitespaceOptions) && !str_contains($tokens[$start + 1]->getContent(), "\n")) {
             $tokens->ensureWhitespaceAtIndex($start, 1, ' ');
         }
     }
