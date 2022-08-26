@@ -38,9 +38,10 @@ In your PHP CS Fixer configuration (`.php_cs` or `.php_cs.dist`) register fixers
     ->exclude('node_modules')
     ->exclude('vendors')
     ->in( __DIR__ )
-;
+ ;
 
- return PhpCsFixer\Config::create()
+ $config = new PhpCsFixer\Config();
+ $config
 +    ->registerCustomFixers([
 +        new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
 +        new WeDevs\Fixer\BlankLineAfterClassOpeningFixer()
@@ -48,6 +49,8 @@ In your PHP CS Fixer configuration (`.php_cs` or `.php_cs.dist`) register fixers
 +    ->setRules( WeDevs\Fixer\Fixer::rules() )
      ->setFinder( $finder )
 ;
+
+ return $config;
 ```
 
 The `WeDevs\Fixer\Fixer::rules()` function simplifies the usage of the WordPress specific rules. However, if you want more control and have different taste, you can copy/paste the rules from the `WeDevs\Fixer\Fixer` class to the `.php_cs` file if you want to.
