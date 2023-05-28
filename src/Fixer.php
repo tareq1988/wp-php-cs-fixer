@@ -26,6 +26,12 @@ class Fixer
                 'position_after_functions_and_oop_constructs' => 'same',
                 'allow_single_line_closure' => false,
             ],
+            'curly_braces_position' => [
+                'classes_opening_brace'             => 'same_line',
+                'anonymous_classes_opening_brace'   => 'same_line',
+                'anonymous_functions_opening_brace' => 'same_line',
+                'functions_opening_brace' => 'same_line',
+            ],
             'cast_spaces' => ['space' => 'single'],
             //'class_attributes_separation' => ['elements' => ['method', 'const', 'property']],
             'class_definition' => ['single_line' => true],
