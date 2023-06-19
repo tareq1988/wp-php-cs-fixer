@@ -27,7 +27,7 @@ composer require --dev tareq1988/wp-php-cs-fixer
 ```
 
 ## Usage
-In your PHP CS Fixer configuration (`.php_cs` or `.php_cs.dist`) register fixers and use them:
+In your PHP CS Fixer configuration (`.php-cs-fixer.dist.php`) register fixers and use them:
 
 ```diff
  <?php
@@ -57,6 +57,6 @@ The `WeDevs\Fixer\Fixer::rules()` function simplifies the usage of the WordPress
 
 ### Example File
 
-The example [.php_cs.example](https://github.com/tareq1988/wp-php-cs-fixer/blob/master/.php_cs.example) file should be a fine starting point for your plugins. Just drop the file into your plugin folder by renaming to `.php_cs` and you are good to go.
+The example [.php_cs.example](https://github.com/tareq1988/wp-php-cs-fixer/blob/master/.php-cs-fixer.dist.php.example) file should be a fine starting point for your plugins. Just drop the file into your plugin folder by renaming to `.php-cs-fixer.dist.php` and you are good to go.
 
 Upon configuring everything, run `php-cs-fixer fix` from the commandline.
